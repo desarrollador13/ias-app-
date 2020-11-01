@@ -1,0 +1,79 @@
+version: '3.1'
+
+# networks:
+#   app-tier:
+#     driver: bridge
+
+services:
+  
+  # nginx:
+  #   container_name: nginx
+  #   image: nginx
+  #   build:
+  #     context: .
+  #     dockerfile: .docker/nginx.dockerfile
+  #   volumes:
+  #     - ./dist:/usr/share/nginx/html
+  #   ports:
+  #     - "80:80"
+  #     - "443:443"
+
+  #   networks:
+  #     - app-network
+
+  database:
+    image: postgres:9.6
+    container_name: database_prueba
+    # build: 
+    #   context: ./sql-postgres
+    #   dockerfile: Dockerfile
+    #image: postgres:9.6
+    hostname: mypostgres
+    ports:
+      - '5432:5432'
+    networks:
+      app-network:
+    # volumes:
+    #   - ./sql-postgres/create_db.sql:/docker-entrypoint-initdb.d/1create_db.sql
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_DB: app
+      POSTGRES_PASSWORD: admin
+      POSTGRES_HOST_AUTH_METHOD: trust
+  api:
+    container_name: api-rest-v1-prueba
+    image: api-rest-v1-prueba
+    build:
+      context: ./prueba-ias-backend
+      dockerfile: Dockerfile
+    depends_on:
+      - database
+    links:
+      - database
+    networks:
+      app-network:
+    ports:
+      - "3001:3001"
+  web:
+    container_name: app-web-prueba
+    image: app-web-prueba
+    build:
+      context: ./prueba-ias-frontend
+      dockerfile: Dockerfile
+    # depends_on:
+    #   - postgres
+    # links:
+    #   - postgres
+    networks:
+      app-network:
+    ports:
+      - "4200:4200"
+networks:
+  app-network: 
+# networks:
+#   app-network: 
+#     ipam:
+#       config:
+#         - subnet: 172.17.0.0/24
+#     driver: bridge
+  

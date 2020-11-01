@@ -1,0 +1,25 @@
+.custom-row {
+	margin-top: -35px;
+}
+.titulo-accion {
+	text-align: center !important;
+	font-size: 23px;
+}
+
+.img-efecto {
+	padding: 23px; 
+	box-shadow: 2px 26px 56px 0 rgba(0,0,0,.3);
+}
+
+.row-custom-left {
+	margin-left: -89px !important;
+}
+
+.error-margenes {
+	margin-left: 12px !important; 
+	margin-bottom: 15px !important;
+}
+
+.img-left {
+	margin-left: 23px !important;
+}

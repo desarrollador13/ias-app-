@@ -1,0 +1,88 @@
+<style>
+    p {
+    margin: 0;
+  }
+
+  .content {
+    display: flex;
+    margin: 32px auto;
+    padding: 0 16px;
+    max-width: 960px;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  svg.material-icons {
+    height: 24px;
+    width: auto;
+  }
+
+  svg.material-icons:not(:last-child) {
+    margin-right: 8px;
+  }
+
+  a,
+  a:visited,
+  a:hover {
+    color: #1976d2;
+    text-decoration: none;
+  }
+
+  a:hover {
+    color: #125699;
+  }
+
+  .titulo-custom {
+    margin-left: 64px;
+  }
+  
+</style>
+<!-- Toolbar -->
+<div class="content" style="margin-bottom: 50px" role="main">
+  <div class="container">
+
+    <div class="container-fluid">
+
+      <div class="mx-auto mt-1">
+        <div class="row" style="margin-top: -29px;">
+        <!--style="margin-left:402px;" -->
+          <img 
+          style="margin-left: 275px;"
+          class="img-logo custom-logo centrado-app" 
+          src='/assets/logo.png' 
+          width="280"
+          height="150" 
+          alt='image'>
+         
+        </div>
+        <div class="row"> 
+           <h4 
+           style="margin-left: 287px;"
+           class="centrado-app">Prueba IAS Front End</h4>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="container-fluid mt-3" style="font-size: 14px;">
+
+      <div class="row">
+
+        <div class="col-lg-12 mt-4 col-sm-12 col-md-12">
+          <app-reporte-servicio>
+          </app-reporte-servicio>
+        </div>
+       <!--  <div class="col-lg-6 mt-2 col-sm-12 col-md-6">
+          <p>hola</p>
+          <app-loguin>
+          </app-loguin> 
+        </div> -->
+      </div>
+
+    </div>
+
+  </div>
+</div>
+<router-outlet></router-outlet>
+
+

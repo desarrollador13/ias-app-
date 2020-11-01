@@ -1,0 +1,506 @@
+<div class="row custom-row">
+  <!-- offset-md-2 -->
+  <div class="col-12">
+    <div class="row" style="margin-left: -80px;">
+      <!-- routerLink="/component-one" -->
+      <a  href="#" 
+        data-toggle="modal" 
+        data-target="#exampleModal"
+        class="col-4 offset-md-2 centrado-app img-efecto">
+        <img 
+            class="img-left"
+            src='/assets/reportes.png' 
+            width="230"
+            height="200" 
+            alt='image'>
+        <p class="titulo-accion">Generar Reportes</p>
+      </a>
+
+      <a  href="#" 
+        data-toggle="modal" 
+        data-target="#exampleModalCenter"
+        class="col-4 centrado-app img-efecto">
+        <img 
+            class="img-left"
+            src='/assets/calcular-hojas.png' 
+            width="230"
+            height="200" 
+            alt='image'>
+        <p class="titulo-accion">Cálculo De Horas</p>
+      </a>
+
+    </div>
+
+  </div>
+
+      <!-- Modal -->
+  <div 
+    class="modal fade" 
+    id="exampleModal" 
+    tabindex="-1" 
+    aria-labelledby="exampleModalLabel" 
+    aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 
+            class="modal-title" 
+            id="exampleModalLabel">Reporte De Servicio</h5>
+          <button 
+            type="button" 
+            class="close" 
+            data-dismiss="modal" 
+            (click)="limpiarVariables($event)" 
+            aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+
+          <div class="col-12 mt-1"> 
+            <div 
+              *ngIf="errorRegistro" 
+              class="text-danger" 
+              style="margin-left: 14px; margin-bottom: 15px;">
+              <div 
+                *ngIf="errorRegistro"
+                style="margin-left: 10px;">{{msgRegistrop}}.</div>
+            </div> 
+          </div>
+
+          <div class="col-12 mt-1"> 
+            <div 
+              *ngIf="exitosoRegistro" 
+              class="text-success" 
+              style="margin-left: 14px; margin-bottom: 15px;">
+              <div 
+                *ngIf="exitosoRegistro"
+                style="margin-left: 10px;">{{msgRegistrop}}.</div>
+            </div> 
+          </div>
+
+          <form  
+            style="margin-top: -15px!important;" 
+            [formGroup]="formReporte" 
+            class="row mt-1" 
+            (ngSubmit)="registrarReporte($event)">
+
+            <div class="col-10 offset-md-1 mt-1">
+              <label 
+                class="custom-label"
+                for="tecnico">Identificación del técnico: </label>
+
+                <select 
+                  id="tecnico"
+                  name="select"  
+                  required
+                  formControlName="IdentificacionTecnico"
+                  class="form-control custom-input"
+                  [ngClass]="{ 'is-invalid': submit && f.IdentificacionTecnico.errors }"
+                  type="text">
+                  <option value="">Seleccione Sede</option>
+                  <option 
+                    [value]="tecnico.Identificacion" 
+                    *ngFor="let tecnico of dataSelectTecnico">{{tecnico.Identificacion}}</option>
+                </select>
+                <div 
+                  *ngIf="submit && f.IdentificacionTecnico.errors" 
+                  class="text-danger" 
+                  style="margin-left: 12px;">
+                  <div *ngIf="f.IdentificacionTecnico.errors.required">el campo Identificación del técnico es obligatorio.</div>
+                </div> 
+            </div>
+
+            <div class="col-10 offset-md-1 mt-1">
+              <label 
+                class="custom-label"
+                for="servicio">Identificación del servicio: </label>
+                <input 
+                  id="servicio"
+                  formControlName="IdentificacionServicio"
+                  class="form-control custom-input"
+                  [ngClass]="{ 'is-invalid': submit && f.IdentificacionServicio.errors }"
+                  type="text">
+                <div *ngIf="submit && f.IdentificacionServicio.errors" 
+                      class="text-danger" 
+                      style="margin-left: 12px;">
+                  <div *ngIf="f.IdentificacionServicio.errors.required">el campo Identificación del servicio es obligatorio.</div>
+                </div> 
+            </div>
+
+            <div class="col-10 offset-md-1 mt-1">
+              <label 
+                class="custom-label"
+                for="fechaInicio">Fecha y hora de inicio: </label>
+                <input 
+                  id="fechaInicio"
+                  formControlName="FechaInicio"
+                  class="form-control custom-input"
+                  [ngClass]="{ 'is-invalid': submit && f.FechaInicio.errors }"
+                  type="datetime-local">
+                <div 
+                  *ngIf="submit && f.FechaInicio.errors" 
+                  class="text-danger" 
+                  style="margin-left: 12px;">
+                  <div *ngIf="f.FechaInicio.errors.required">el campo Fecha y hora de inicio es obligatorio.</div>
+                </div> 
+             </div>
+
+             <div class="col-10 offset-md-1 mt-1">
+              <label 
+                class="custom-label"
+                for="fechaFin">Fecha y hora de fin: </label>
+                <input 
+                  id="fechaFin"
+                  formControlName="FechaFin"
+                  class="form-control custom-input"
+                  [ngClass]="{ 'is-invalid': submit && f.FechaFin.errors }"
+                  type="datetime-local">
+                <div 
+                  *ngIf="submit && f.FechaFin.errors" 
+                  class="text-danger" 
+                  style="margin-left: 12px;">
+                  <div *ngIf="f.FechaFin.errors.required">el campo Fecha de fin de inicio es obligatorio.</div>
+                </div> 
+             </div>
+
+            <div class="col-10 offset-md-1 mt-3">
+               <button 
+               style="margin-left: 165px;" 
+                type="button" 
+                class="btn btn-secondary" 
+                (click)="limpiarVariables($event)"
+                data-dismiss="modal">Cancelar</button>
+
+                <button 
+                style="margin-left: 7px;" 
+                type="submit"  
+                [disabled]="buttom"
+                class="btn btn-primary">Guardar</button>
+            </div>
+
+          </form>
+
+        </div>
+
+        <!-- <div class="modal-footer">
+          <button 
+            type="button" 
+            class="btn btn-secondary" 
+            data-dismiss="modal">Close</button>
+          <button 
+            type="button" 
+            class="btn btn-primary">Save changes</button>
+        </div> -->
+
+      </div>
+    </div>
+  </div>
+
+<!-- Modal -->
+
+
+  <!-- Modal UNO-->
+  <div 
+    class="modal fade" 
+    id="exampleModalCenter" 
+    tabindex="-1" 
+    role="dialog" 
+    aria-labelledby="exampleModalCenterTitle" 
+    aria-hidden="true">
+    <div 
+      class="modal-dialog modal-dialog-centered" 
+      role="document">
+      <div class="modal-content">
+
+        <div class="modal-header">
+          <h5 
+            class="modal-title" 
+            id="exampleModalLongTitle">Calculo De Horas</h5>
+          <button 
+            type="button" 
+            class="close" 
+            data-dismiss="modal"
+            (click)="limpiarVariables($event)" 
+            aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+
+        <div class="modal-body">
+
+          <div 
+            class="col-12 mt-1" 
+            style="margin-left: 11px;"> 
+             <div 
+              *ngIf="errorRegistro" 
+              class="text-danger" 
+              style="margin-left: 11px; margin-bottom: 15px;">
+                <div 
+                  *ngIf="errorRegistro"
+                   style="margin-left: 10px;">{{msgRegistrop}}.</div>
+              </div> 
+          </div>
+
+          <div class="col-12 mt-1" style="margin-left: 11px;"> 
+             <div 
+              *ngIf="exitosoRegistro" 
+              class="text-success" 
+              style="margin-left: 11px; margin-bottom: 15px;">
+                <div 
+                  *ngIf="exitosoRegistro"
+                  style="margin-left: 10px;">{{msgRegistrop}}.</div>
+              </div> 
+          </div>
+
+          <form  
+            style="margin-top: -15px!important; margin-bottom: 10px;" 
+            [formGroup]="formCalculos" 
+            class="row mt-1" 
+            (ngSubmit)="calcularHoras($event)">
+
+            <div class="col-10 offset-md-1 mt-1">
+              <label 
+                class="custom-label"
+                for="tecnico">Identificación del técnico: </label>
+
+                <select 
+                  id="tecnico"
+                  name="select"  
+                  required
+                  formControlName="identificacion"
+                  class="form-control custom-input"
+                  [ngClass]="{ 'is-invalid': submit && fl.identificacion.errors }"
+                  type="text">
+                  <option value="">Seleccione Identificación</option>
+                  <option [value]="tecnico.Identificacion" *ngFor="let tecnico of dataSelectTecnico">{{tecnico.Identificacion}}</option>
+                </select>
+                <div *ngIf="submit && fl.identificacion.errors" class="text-danger" style="margin-left: 12px;">
+                  <div *ngIf="fl.identificacion.errors.required">el campo Identificación del técnico es obligatorio.</div>
+                </div> 
+             </div>
+
+
+            <div class="col-10 offset-md-1 mt-1">
+              <label 
+                class="custom-label"
+                for="semana">Numero De Semana: </label>
+                <input 
+                  id="semana"
+                  formControlName="numeroSemana"
+                  class="form-control custom-input"
+                  [ngClass]="{ 'is-invalid': submit && fl.numeroSemana.errors }"
+                  type="text">
+                <div *ngIf="submit && fl.numeroSemana.errors" class="text-danger" style="margin-left: 12px;">
+                  <div *ngIf="fl.numeroSemana.errors.required">el campo Numero De Semana es obligatorio y es de tipo numerico.</div>
+                </div> 
+             </div>
+
+             <div class="col-9 offset-md-1 mt-3">
+               <button 
+               style="margin-left: 138px;" 
+                type="button" 
+                class="btn btn-secondary" 
+                (click)="limpiarVariables($event)"
+                data-dismiss="modal">Cancelar</button>
+
+                <button 
+                style="margin-left: 15px; width: 101px;" 
+                type="submit"  
+                [disabled]="buttom"
+                class="btn btn-primary">Calcular</button>
+            </div>
+
+          </form>
+
+        <div class="modal-footer">
+          <div class="row" *ngIf="listHoras">
+
+            <div class="mt-2 col-12"
+              style="margin-bottom: 18px; margin-left: 26px;">
+              <p><strong>
+                Horas De Trabajo De Tecnico: {{ IdentificacionTecnico }} 
+              </strong></p>
+              <p style="margin-top: -14px;"><strong>
+                Reporte De La Semana No {{ semanaTecnico }} 
+              </strong></p>
+            </div>
+
+            <div class="col-6" *ngFor="let calculo of listHora | keyvalue">
+              <ul> 
+                <li> 
+                  {{getValue(calculo.key)}} : {{calculo.value}}
+                  <!--  {{ getValue(calculo) | json }} -->
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+  <!-- Modal UNO FIN-->
+
+
+  <!-- Modal DOS-->
+  <div 
+    class="modal fade" 
+    id="exampleModalCenter1" 
+    tabindex="-1" 
+    role="dialog" 
+    aria-labelledby="exampleModalCenterTitle" 
+    aria-hidden="true">
+    <div 
+      class="modal-dialog modal-dialog-centered" 
+      role="document">
+      <div class="modal-content">
+
+        <div class="modal-header">
+          <h5 
+            class="modal-title" 
+            id="exampleModalLongTitle">Reporte De Servicio</h5>
+          <button 
+            type="button" 
+            class="close" 
+            data-dismiss="modal"
+            (click)="limpiarVariables($event)" 
+            aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+
+        <div class="modal-body">
+          <div class="col-12 mt-1" style="margin-left: 11px;"> 
+             <div 
+              *ngIf="errorRegistro" 
+              class="text-danger" 
+              style="margin-left: 11px; margin-bottom: 15px;">
+                <div 
+                  *ngIf="errorRegistro"
+                  style="margin-left: 10px;">{{msgRegistrop}}.</div>
+              </div> 
+          </div>
+
+          <div 
+            class="col-12 mt-1" 
+            style="margin-left: 11px;"> 
+             <div 
+              *ngIf="exitosoRegistro" 
+              class="text-success" 
+              style="margin-left: 11px; margin-bottom: 15px;">
+                <div 
+                  *ngIf="exitosoRegistro"
+                  style="margin-left: 10px;">{{msgRegistrop}}.</div>
+              </div> 
+          </div>
+
+          <form  
+            style="margin-top: -15px!important;" 
+            [formGroup]="formReporte" 
+            class="row mt-1" 
+            (ngSubmit)="registrarReporte($event)">
+
+            <div class="col-10 offset-md-1 mt-1">
+              <label 
+                class="custom-label"
+                for="tecnico">Identificación del técnico: </label>
+
+                <select 
+                  id="tecnico"
+                  name="select"  
+                  required
+                  formControlName="IdentificacionTecnico"
+                  class="form-control custom-input"
+                  [ngClass]="{ 'is-invalid': submit && f.IdentificacionTecnico.errors }"
+                  type="text">
+                  <option value="">Seleccione Sede</option>
+                  <option [value]="tecnico.Identificacion" *ngFor="let tecnico of dataSelectTecnico">{{tecnico.Identificacion}}</option>
+                </select>
+                <div *ngIf="submit && f.IdentificacionTecnico.errors" class="text-danger" style="margin-left: 12px;">
+                  <div *ngIf="f.IdentificacionTecnico.errors.required">el campo Identificación del técnico es obligatorio.</div>
+                </div> 
+             </div>
+
+             <div class="col-10 offset-md-1 mt-1">
+              <label 
+                class="custom-label"
+                for="servicio">Identificación del servicio: </label>
+                <input 
+                  id="servicio"
+                  formControlName="IdentificacionServicio"
+                  class="form-control custom-input"
+                  [ngClass]="{ 'is-invalid': submit && f.IdentificacionServicio.errors }"
+                  type="text">
+                <div *ngIf="submit && f.IdentificacionServicio.errors" class="text-danger" style="margin-left: 12px;">
+                  <div *ngIf="f.IdentificacionServicio.errors.required">el campo Identificación del servicio es obligatorio.</div>
+                </div> 
+             </div>
+
+             <div class="col-10 offset-md-1 mt-1">
+              <label 
+                class="custom-label"
+                for="fechaInicio">Fecha y hora de inicio: </label>
+                <input 
+                  id="fechaInicio"
+                  formControlName="FechaInicio"
+                  class="form-control custom-input"
+                  [ngClass]="{ 'is-invalid': submit && f.FechaInicio.errors }"
+                  type="datetime-local">
+                <div *ngIf="submit && f.FechaInicio.errors" class="text-danger" style="margin-left: 12px;">
+                  <div *ngIf="f.FechaInicio.errors.required">el campo Fecha y hora de inicio es obligatorio.</div>
+                </div> 
+             </div>
+
+             <div class="col-10 offset-md-1 mt-1">
+              <label 
+                class="custom-label"
+                for="fechaFin">Fecha y hora de fin: </label>
+                <input 
+                  id="fechaFin"
+                  formControlName="FechaFin"
+                  class="form-control custom-input"
+                  [ngClass]="{ 'is-invalid': submit && f.FechaFin.errors }"
+                  type="datetime-local">
+                <div *ngIf="submit && f.FechaFin.errors" class="text-danger" style="margin-left: 12px;">
+                  <div *ngIf="f.FechaFin.errors.required">el campo Fecha de fin de inicio es obligatorio.</div>
+                </div> 
+             </div>
+
+             <div class="col-10 offset-md-1 mt-3">
+               <button 
+               style="margin-left: 165px;" 
+                type="button" 
+                class="btn btn-secondary" 
+                (click)="limpiarVariables($event)"
+                data-dismiss="modal">Cancelar</button>
+
+                <button 
+                style="margin-left: 7px;" 
+                type="submit"  
+                [disabled]="buttom"
+                class="btn btn-primary">Guardar</button>
+            </div>
+
+          </form>
+
+        </div>
+
+        <!-- <div class="modal-footer"> -->
+
+          <!--  <button 
+            type="button" 
+            class="btn btn-secondary" 
+            data-dismiss="modal">Cancelar</button>
+
+          <button 
+            type="submit"  
+            class="btn btn-primary">Guardar</button> -->
+       <!--  </div> -->
+
+      </div>
+    </div>
+  </div>
+  <!-- Modal DOS FIN-->
+</div>
+
