@@ -19,7 +19,8 @@ Docker Base de datos Postgresql
    carga el servidor en angular en http://localhost:4200/ y en nodejs http://localhost:3001/api/v1/services/prueba/
 
 7. para crear las tablas ejecutamos el siguiente recurso http://localhost:3001/api/v1/services/migrate/docker/
-   lo podemos ejecutar en el navegador o en postman
+   lo podemos ejecutar en el navegador o en postman genera la base De DATOS y las tablas genera insert de pruebas
+   para la tabla técnico y sevicios es importante ejecutar este recurso ya que el frontend lo necesita
    respuesta servicio
    {
     "code": 200,
@@ -28,4 +29,7 @@ Docker Base de datos Postgresql
    }
 
 8. Pruebas unitarias desarrolladas con jest.io para el backend las pruebas se ejecutan con el comando 
-	npm run test
+	 npm run test
+
+9. al aceder a la aplicación ya hay datos de pruebas que se cargan en el servicio  
+	 http://localhost:3001/api/v1/services/migrate/docker/

@@ -75,6 +75,27 @@ export class ServicesDAO {
 
 	}
 
+	public async validarSemana(identificacion:string|any):Promise<any>{
+		let data: any
+		try {
+		  const connection = await this.databaseConnection.getPool()
+			const query:any = await connection.query(`SELECT extract(week from "FechaInicio"::date)
+																								FROM public."Servicio"
+																								WHERE "IdentificacionTecnico" = '${identificacion}';`);
+			if(query.rowCount > 0 ){
+				data = {'status':200, 'rows': query.rows, msg:'existe'} 
+			}else{
+				data = {'status':200, 'rows': [], msg:'no_existe'} 
+			}
+			return data
+		}catch(error) {
+			console.log(error)
+			data ={'status' :500,'rows' : [], msg:'error_server'} 
+			return data
+		}
+
+	}
+
 	public async validarDatos(identificacion:string|any, numeroSemana:string|any, fechaSemana:string|any):Promise<any>{
 		let data: any
 		try {

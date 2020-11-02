@@ -69,7 +69,10 @@ export default class ServicesController {
  	async consultarRepotes(req:object|any): Promise<any> {
  		let res:any
  		console.log(req.params)
- 		let {identificacion, numeroSemana} = req.params
+ 		let identificacion = ''
+ 		let numeroSemana:any = ''
+ 		identificacion = req.params.identificacion
+ 		numeroSemana = req.params.numeroSemana
  		try{
  			let sumHorasNormales:number|any = 0
  			let sumHorasNocturnas:number|any = 0
@@ -96,11 +99,61 @@ export default class ServicesController {
  			}
 
  			let fechaSemana:any = this.getDateOfWeek(numeroSemana)
+ 			let resVa:any = await this.servicesDAO.validarSemana(identificacion) 
+
+ 			if(resVa.msg == 'no_existe'){
+				return {
+					status:200,
+					msg: "Exitoso",
+					rows : [{
+						"sum_Horas_Normales": sumHorasNormales,
+						"sum_Horas_Nocturnas": sumHorasNocturnas,
+						"sum_Horas_Dominicales": sumHorasDominicales,
+						"sum_Normales_Extra": sumNormalesExtra,
+						"sum_Nocturnas_Extra": sumNocturnasExtra,
+						"sum_Dominicales_Extra": sumDominicalesExtra
+					}]
+				}
+			}
+
+			if(resVa.msg == 'error_server'){
+				return {
+					status:200,
+					msg: "Exitoso",
+					rows : [{
+						"sum_Horas_Normales": sumHorasNormales,
+						"sum_Horas_Nocturnas": sumHorasNocturnas,
+						"sum_Horas_Dominicales": sumHorasDominicales,
+						"sum_Normales_Extra": sumNormalesExtra,
+						"sum_Nocturnas_Extra": sumNocturnasExtra,
+						"sum_Dominicales_Extra": sumDominicalesExtra
+					}]
+				}
+			}
+			let siExiste:any = false
+			
+ 			for(let i=0; i < resVa.rows.length; i++) {
+ 				if(resVa.rows[i].date_part == numeroSemana){
+ 					siExiste = true
+ 				}
+			}
+			if(!siExiste) {
+				return {
+					status:200,
+					msg: "Exitoso",
+					rows : [{
+						"sum_Horas_Normales": sumHorasNormales,
+						"sum_Horas_Nocturnas": sumHorasNocturnas,
+						"sum_Horas_Dominicales": sumHorasDominicales,
+						"sum_Normales_Extra": sumNormalesExtra,
+						"sum_Nocturnas_Extra": sumNocturnasExtra,
+						"sum_Dominicales_Extra": sumDominicalesExtra
+					}]
+				}
+			} 
 
  			res = await this.servicesDAO.validarDatos(identificacion, numeroSemana, fechaSemana)
- 			console.log(res)
  			if(res.msg == 'no_existe'){
- 				console.log('aqui no existe')
 				return {
 					status:200,
 					msg: "Exitoso",
@@ -115,7 +168,6 @@ export default class ServicesController {
 				}
 			}
 			if(res.msg == 'error_server'){
-				console.log('error_server')
 				return {
 					status:200,
 					msg: "Exitoso",

@@ -81,7 +81,7 @@ export class ReporteServicioComponent implements OnInit {
     this.semanaTecnico = 0
     this.listHoras = false
     this.listHora = []
-
+    this.listHora.length = 0;
   	if (this.formCalculos.invalid) {
   		this.submit = true;
   		this.buttom = false
@@ -118,7 +118,8 @@ export class ReporteServicioComponent implements OnInit {
   			}else {
 
           this.formCalculos.reset()
-
+          this.listHora = []
+          this.listHora.length = 0;
   				this.listHora = data.rows[0]
   				this.listHoras = true
 
@@ -156,6 +157,11 @@ export class ReporteServicioComponent implements OnInit {
 	  this.msgRegistro = ''
 	  this.msgRegistrop = ''
 
+    this.IdentificacionTecnico = ''
+    this.semanaTecnico = 0
+    this.listHoras = false
+    this.listHora = []
+    this.listHora.length = 0;
 	  
   	if (this.formReporte.invalid) {
   		this.buttom = false
